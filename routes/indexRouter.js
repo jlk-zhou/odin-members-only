@@ -31,6 +31,15 @@ indexRouter.post(
   indexController.giveMemberStatus,
 );
 
+indexRouter.get("/become-admin", indexController.becomeAdminGet); 
+indexRouter.post(
+  "/become-admin", 
+  passport.authenticate("admin", {
+    failureRedirect: "/become-admin"
+  }), 
+  indexController.giveAdminStatus, 
+)
+
 indexRouter.get("/", indexController.showMessages);
 
 module.exports = indexRouter;

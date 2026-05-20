@@ -20,6 +20,7 @@ app.use(passport.session());
 
 passport.use("login", strategies.login);
 passport.use("member", strategies.member); 
+passport.use("admin", strategies.admin); 
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 

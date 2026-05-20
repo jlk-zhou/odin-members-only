@@ -31,6 +31,10 @@ async function giveMemberStatus(userId) {
   await pool.query("UPDATE users SET is_member = true WHERE id = $1", [userId]);
 }
 
+async function giveAdminStatus(userId) {
+  await pool.query("UPDATE users SET is_admin = true WHERE id = $1", [userId]); 
+}
+
 async function createNewMessage(userId, message) {
   await pool.query("INSERT INTO messages (content, user_id) VALUES ($1, $2)", [
     message,
@@ -40,11 +44,15 @@ async function createNewMessage(userId, message) {
 
 async function getAllMessages() {
   const { rows } = await pool.query(`
-    SELECT added, content, firstname, lastname
+    SELECT messages.id, added, content, firstname, lastname
     FROM messages
     JOIN users ON users.id = user_id; 
     `);
   return rows; 
+}
+
+async function deleteMessage(messageId) {
+  await pool.query("DELETE FROM messages WHERE id = $1", [messageId]); 
 }
 
 module.exports = {
@@ -53,6 +61,8 @@ module.exports = {
   getUserById,
   getPrivilegePassword,
   giveMemberStatus,
+  giveAdminStatus, 
   createNewMessage, 
-  getAllMessages, 
+  getAllMessages,
+  deleteMessage,  
 };

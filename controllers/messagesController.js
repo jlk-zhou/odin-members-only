@@ -30,7 +30,13 @@ const createNewMessagePost = [
   },
 ];
 
+async function deleteMessage(req, res) {
+  await db.deleteMessage(req.params.messageId);
+  res.redirect("/"); 
+}
+
 module.exports = {
   createNewMessageGet,
   createNewMessagePost,
+  deleteMessage, 
 };

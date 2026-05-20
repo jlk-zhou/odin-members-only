@@ -41,4 +41,24 @@ const member = new LocalStrategy(
   },
 );
 
-module.exports = { login, member };
+const admin = new LocalStrategy(
+  { 
+    usernameField: "admin-password", 
+    passwordField: "admin-password", 
+    passReqToCallback: true
+  },
+  async (req, username, password, done) => {
+    try {
+      const adminPassword = await db.getPrivilegePassword("admin");
+      const match = await bcrypt.compare(password, adminPassword);
+      if (!match) {
+        return done(null, false, { message: "Incorrect admin password" });
+      }
+      return done(null, req.user);
+    } catch (err) {
+      return done(err);
+    }
+  },
+);
+
+module.exports = { login, member, admin };

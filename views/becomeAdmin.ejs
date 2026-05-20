@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Members Only</title>
+</head>
+<body>
+  <h1>Become an Admin as: <%= user.firstname %> <%= user.lastname %></h1> 
+  <form action="/become-admin" method="POST">
+    <label for="admin-password">Please enter your admin password:</label>
+    <br>
+    <input type="password" name="admin-password" id="admin-password">
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+  <a href="/">Back to Home</a>
+</body>
+</html>

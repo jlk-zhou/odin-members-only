@@ -8,11 +8,15 @@
 <body>
   <% if (locals.user) { %>
     <h1>Welcome Back, <%= user.firstname %> <%= user.lastname %>!</h1>
-    <% if (user.is_member) { %>
+    <% if (user.is_admin) { %>
+      <p>You are now an admin.</p>
+    <% } else if (user.is_member) { %>
       <p>You are now a prestige member of our exclusive club.</p>
+      <a href="/become-admin">Become Admin</a>
     <% } else { %>
       <p>You are not a member yet.</p>
       <a href="/join-club">Join The Club</a>
+      <a href="/become-admin">Become Admin</a>
     <% } %>
     <a href="/messages/new">Create a Message</a>
     <a href="/log-out">Log Out</a>
@@ -38,6 +42,9 @@
           <% if (user.is_member) { %>
             <p>By: <%= message.firstname %> <%= message.lastname %></p>
             <p>On: <%= message.added %></p> 
+            <% if (user.is_admin) { %>
+              <a href="messages/delete/<%= message.id %>">Delete</a>
+            <% } %>
           <% } %>
         <% } %>
       </li>

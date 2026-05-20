@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 
 async function showMessages(req, res) {
   const messages = await db.getAllMessages();
-  console.log(messages); 
   res.render("index", { user: req.user, messages: messages });
 }
 
@@ -53,10 +52,26 @@ async function giveMemberStatus(req, res) {
   res.redirect("/");
 }
 
+async function becomeAdminGet(req, res) {
+  if (req.user) {
+    res.render("becomeAdmin", { user: req.user }); 
+  } else {
+    res.redirect("/"); 
+  }
+}
+
+async function giveAdminStatus(req, res) {
+  await db.giveAdminStatus(req.user.id); 
+  await db.giveMemberStatus(req.user.id); 
+  res.redirect("/"); 
+}
+
 module.exports = {
   showMessages,
   signUpGet,
   signUpPost,
   joinClubGet,
   giveMemberStatus,
+  becomeAdminGet, 
+  giveAdminStatus, 
 };
