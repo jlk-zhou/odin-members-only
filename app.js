@@ -3,7 +3,7 @@ const express = require("express");
 const session = require("express-session");
 const sessionOptions = require("./auth/sessionOptions");
 const passport = require("passport");
-const { localStrategy } = require("./auth/LocalStrategy");
+const strategies = require("./auth/LocalStrategies");
 const serializeUser = require("./auth/serializeUser");
 const deserializeUser = require("./auth/deserializeUser");
 
@@ -17,7 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session(sessionOptions));
 app.use(passport.session());
 
-passport.use(localStrategy);
+passport.use("login", strategies.login);
+passport.use("member", strategies.member); 
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 

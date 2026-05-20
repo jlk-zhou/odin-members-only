@@ -8,6 +8,12 @@
 <body>
   <% if (locals.user) { %>
     <h1>Welcome Back, <%= user.firstname %> <%= user.lastname %>!</h1>
+    <% if (!user.is_member) { %>
+      <p>You are not a member yet.</p>
+      <a href="/join-club">Join The Club</a>
+    <% } else { %>
+      <p>You are now a prestige member of our exclusive club.</p>
+    <% } %>
     <a href="/log-out">Log Out</a>
   <% } else { %>
     <h1>Welcome!</h1> 

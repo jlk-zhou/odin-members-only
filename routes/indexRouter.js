@@ -5,9 +5,10 @@ const indexController = require("../controllers/indexController");
 
 indexRouter.get("/sign-up", indexController.signUpGet);
 indexRouter.post("/sign-up", indexController.signUpPost);
+
 indexRouter.post(
   "/log-in",
-  passport.authenticate("local", {
+  passport.authenticate("login", {
     successRedirect: "/",
     failureRedirect: "/",
   }),
@@ -15,11 +16,21 @@ indexRouter.post(
 indexRouter.get("/log-out", (req, res, next) => {
   req.logout((err) => {
     if (err) {
-      return next(err); 
+      return next(err);
     }
-    res.redirect("/"); 
-  })
-})
+    res.redirect("/");
+  });
+});
+
+indexRouter.get("/join-club", indexController.joinClubGet);
+indexRouter.post(
+  "/join-club",
+  passport.authenticate("member", {
+    failureRedirect: "/join-club",
+  }),
+  indexController.giveMemberStatus,
+);
+
 indexRouter.get("/", indexController.showMessages);
 
 module.exports = indexRouter;
