@@ -7,6 +7,7 @@ const strategies = require("./auth/LocalStrategies");
 const serializeUser = require("./auth/serializeUser");
 const deserializeUser = require("./auth/deserializeUser");
 
+const messagesRouter = require("./routes/messagesRouter"); 
 const indexRouter = require("./routes/indexRouter");
 
 const app = express();
@@ -22,6 +23,7 @@ passport.use("member", strategies.member);
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
+app.use("/messages", messagesRouter); 
 app.use("/", indexRouter);
 
 const PORT = process.env.PORT || 3000;

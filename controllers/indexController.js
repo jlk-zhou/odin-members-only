@@ -4,7 +4,9 @@ const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
 
 async function showMessages(req, res) {
-  res.render("index", { user: req.user });
+  const messages = await db.getAllMessages();
+  console.log(messages); 
+  res.render("index", { user: req.user, messages: messages });
 }
 
 async function signUpGet(req, res) {
@@ -42,13 +44,13 @@ async function joinClubGet(req, res) {
   if (req.user) {
     res.render("joinClub", { user: req.user });
   } else {
-    res.redirect("/"); 
+    res.redirect("/");
   }
 }
 
 async function giveMemberStatus(req, res) {
-  await db.giveMemberStatus(req.user.id); 
-  res.redirect("/"); 
+  await db.giveMemberStatus(req.user.id);
+  res.redirect("/");
 }
 
 module.exports = {
@@ -56,5 +58,5 @@ module.exports = {
   signUpGet,
   signUpPost,
   joinClubGet,
-  giveMemberStatus
+  giveMemberStatus,
 };
